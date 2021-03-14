@@ -1,0 +1,16 @@
+[
+{
+  "modid": "serverstatusupdater",
+  "name": "serverstatusupdater",
+  "description": "Sends updates about the server state to an API",
+  "version": "#[[\$]]#{version}",
+  "mcversion": "#[[\$]]#{mcversion}",
+  "url": "https://github.com/fivekWBassMachine/MinecraftServerStatusUpdater",
+  "updateUrl": "",
+  "authorList": ["5kWBassMachine"],
+  "credits": "The Forge and FML guys, for making this example",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
