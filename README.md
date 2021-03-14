@@ -29,7 +29,7 @@ The Mod accesses following endpoints:
 
 ### Version
 
-`https://example.com:443/foo/bar?token=B&target=version`
+[GET] `https://example.com:443/foo/bar?token=B&target=version`
 
 The Mod expects an HTTP 200 response, the response body must be the API version of the mod without linebreaks:
 
@@ -37,7 +37,7 @@ The Mod expects an HTTP 200 response, the response body must be the API version 
 
 ### Update
 
-`https://example.com:443/foo/bar?token=B&target=update&status=STARTING`
+[POST] `https://example.com:443/foo/bar?token=B&target=update&status=STARTING`
 
 The Mod expects an HTTP 204 response.
   
