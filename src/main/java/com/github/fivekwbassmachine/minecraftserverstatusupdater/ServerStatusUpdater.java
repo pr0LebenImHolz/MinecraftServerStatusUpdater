@@ -3,10 +3,12 @@ package com.github.fivekwbassmachine.minecraftserverstatusupdater;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.Exception;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.FileUtils;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.ServerStatus;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.*;
+import net.minecraft.init.Blocks;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.*;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,16 +18,16 @@ import java.io.IOException;
  * @author 5kWBassMachine
  * @version 1.0.0
  */
-@Mod(modid = ServerStatusUpdater.MOD_ID, version = ServerStatusUpdater.VERSION, acceptableRemoteVersions = "*", name = ServerStatusUpdater.NAME)
+@Mod(modid = ServerStatusUpdater.MOD_ID, name = ServerStatusUpdater.NAME, version = ServerStatusUpdater.VERSION)
 public class ServerStatusUpdater {
+
     public static final String MOD_ID = "serverstatusupdater";
     public static final String VERSION = "1.0.0";
     public static final String NAME = "ServerStatusUpdater";
 
-    public static ServerStatusUpdater INSTANCE;
-
-    private API api;
-    private boolean debugging;
+    private static Logger logger;
+    private static API api;
+    private static boolean debugging;
 
     /**
      * Requests the API to update the server status.
@@ -33,16 +35,16 @@ public class ServerStatusUpdater {
      * @since 1.0.0
      */
     public static void updateStatus(ServerStatus status) {
-        if (INSTANCE.api == null) {
+        if (api == null) {
             System.err.println(Exception.API_NOT_INITIALIZED);
         }
         else {
             try {
-                INSTANCE.api.setStatus(status);
-                System.out.println(Exception.SUCCESS_UPDATED);
+                api.setStatus(status);
+                logger.info(Exception.SUCCESS_UPDATED);
             } catch (Exception e) {
-                System.err.println(Exception.UPDATE_EXCEPTION.toString().replaceAll("%e", e.toString()));
-                if (INSTANCE.debugging) e.printStackTrace();
+                logger.error(Exception.UPDATE_EXCEPTION.toString().replaceAll("%e", e.toString()));
+                if (debugging) e.printStackTrace();
             }
         }
     }
@@ -52,21 +54,21 @@ public class ServerStatusUpdater {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
+        logger = event.getModLog();
         // Read config
-        INSTANCE = this;
         debugging = true;
         File file = new File("./config/ServerStatusUpdater.txt");
         String credentials = FileUtils.readFile(file);
         credentials = FileUtils.removeSpace(credentials);
         if (credentials.isEmpty()) {
-            System.err.println(Exception.API_CREDENTIALS_EMPTY);
+            logger.error(Exception.API_CREDENTIALS_EMPTY);
         }
         else {
             try {
                 api = new API(credentials);
             }
             catch (Exception e) {
-                System.err.println(e);
+                logger.error(e);
             }
 
         }
@@ -95,11 +97,17 @@ public class ServerStatusUpdater {
         updateStatus(ServerStatus.RUNNING);
     }
 
+    /**
+     * @since 1.0.0
+     */
     @EventHandler
     public void serverStopping(FMLServerStoppingEvent event) {
         updateStatus(ServerStatus.STOPPING);
     }
 
+    /**
+     * @since 1.0.0
+     */
     @EventHandler
     public void serverStopped(FMLServerStoppedEvent event) {
         updateStatus(ServerStatus.STOPPED);

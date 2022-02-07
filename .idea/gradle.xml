@@ -4,11 +4,8 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="delegatedBuild" value="true" />
-        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$PROJECT_DIR$/../../../../freizeit.z0cken.lih/modmaking_1.7.10/resources/gradle-3.5.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />

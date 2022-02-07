@@ -1,15 +1,25 @@
-# Project exclude paths
-/.gradle/
-/eclipse/config
-/eclipse/crash-reports
-/eclipse/logs
-/eclipse/saves
-/eclipse/world
-/eclipse/banned-ips.json
-/eclipse/banned-players.json
-/eclipse/eula.txt
-/eclipse/ops.json
-/eclipse/server.properties
-/eclipse/usercache.json
-/eclipse/usernamecache.json
-/eclipse/whitelist.json
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt
