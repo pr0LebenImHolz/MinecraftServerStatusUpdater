@@ -7,6 +7,11 @@ This Mod sends an update containing the current state to a server.
 The Mod is intended to control a discord bot (e.g. [MinecraftServerStatusBot](https://github.com/pr0LebenImHolz/MinecraftServerStatusBot)).<br />
 Because modding for 1.7.10 is almost impossible, the Mod is held very small without unnecessary features.
 
+## Supported Minecraft Versions
+
+- [Current] 1.12.2
+- [**Development Discontinued!**] 1.7.10
+
 ## States
 
 - STARTING
