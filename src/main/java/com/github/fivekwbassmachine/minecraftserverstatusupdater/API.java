@@ -6,6 +6,7 @@ import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.*;
 import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The API to communicate with the bot.
@@ -29,11 +30,11 @@ public class API {
     public API(String credentials) throws Exception {
         try {
             String[] strings = credentials.split("@");
-            if (strings.length != 2 || strings[0].isEmpty() || strings[1].isEmpty()) throw Exception.API_TOKEN_INVALID;
+            if (strings.length != 2 || strings[0].isEmpty() || strings[1].isEmpty()) throw Exception.ERROR_API_CREDENTIALS_INVALID;
             this.url = strings[1] + "?token=" + strings[0] + "&target=";
         }
         catch (java.lang.Exception e) {
-            throw Exception.API_CREDENTIALS_INVALID;
+            throw Exception.ERROR_API_CREDENTIALS_INVALID;
         }
         checkVersion();
     }
@@ -50,7 +51,7 @@ public class API {
         try {
             return HttpUtils.request(url, method);
         } catch (MalformedURLException e) {
-            throw Exception.API_URL_INVALID;
+            throw Exception.ERROR_API_URL_INVALID;
         }
     }
 
@@ -64,16 +65,15 @@ public class API {
         try {
             HttpResponse response = request(url + "version", RequestMethod.GET);
             if (response.getCode() == 200) {
-                System.out.println(Exception.SUCCESS_API_VERSION);
                 return response.getResponse().equals(VERSION);
             } else {
-                throw Exception.API_VERSION;
+                throw Exception.ERROR_API_VERSION;
             }
         } catch (SSLHandshakeException e) {
             e.printStackTrace();
-            throw (Exception.API_SSL_HANDSHAKE_EXCEPTION);
+            throw (Exception.ERROR_API_TLS);
         } catch (IOException e) {
-            throw Exception.API_CONNECTION_ERROR;
+            throw Exception.ERROR_API_CONNECTION;
         }
     }
 
@@ -85,11 +85,10 @@ public class API {
      */
     public void setStatus(ServerStatus status) throws Exception {
         try {
-            if (request(url + "update&status=" + status.name(), RequestMethod.POST).getCode() != 204) throw Exception.API_CONNECTION_ERROR;
-            System.out.println(Exception.SUCCESS_API_CONNECTION);
+            if (request(url + "update&status=" + status.name(), RequestMethod.POST).getCode() != 204) throw Exception.ERROR_API_CONNECTION;
         } catch (IOException e) {
             e.printStackTrace();
-            throw Exception.API_CONNECTION_ERROR;
+            throw Exception.ERROR_API_CONNECTION;
         }
     }
 }

@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.*;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -36,15 +37,15 @@ public class ServerStatusUpdater {
      */
     public static void updateStatus(ServerStatus status) {
         if (api == null) {
-            System.err.println(Exception.API_NOT_INITIALIZED);
+            logger.error(Exception.ERROR_UPDATE_NO_API);
         }
         else {
             try {
                 api.setStatus(status);
-                logger.info(Exception.SUCCESS_UPDATED);
+                logger.info(Exception.SUCCESS_UPDATE);
             } catch (Exception e) {
-                logger.error(Exception.UPDATE_EXCEPTION.toString().replaceAll("%e", e.toString()));
-                if (debugging) e.printStackTrace();
+                logger.error(Exception.ERROR_UPDATE.toString().replaceAll("%e", e.toString()));
+                if (logger.getLevel().isLessSpecificThan(Level.DEBUG)) e.printStackTrace();
             }
         }
     }
@@ -61,11 +62,12 @@ public class ServerStatusUpdater {
         String credentials = FileUtils.readFile(file);
         credentials = FileUtils.removeSpace(credentials);
         if (credentials.isEmpty()) {
-            logger.error(Exception.API_CREDENTIALS_EMPTY);
+            logger.error(Exception.ERROR_API_CREDENTIALS_EMPTY);
         }
         else {
             try {
                 api = new API(credentials);
+                logger.info(Exception.SUCCESS_API_VERSION);
             }
             catch (Exception e) {
                 logger.error(e);
@@ -81,11 +83,11 @@ public class ServerStatusUpdater {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         if (api == null) {
-            System.err.println(Exception.REGISTER_PLAYER_EVENTS_EXCEPTION);
+            logger.error(Exception.ERROR_REGISTER_PLAYER_EVENTS);
         }
         else {
             FMLCommonHandler.instance().bus().register(new PlayerEvents());
-            System.out.println(Exception.SUCCESS_REGISTER_PLAYER_EVENTS);
+            logger.info(Exception.SUCCESS_REGISTER_PLAYER_EVENTS);
         }
     }
 
