@@ -83,7 +83,7 @@ public class ServerStatusUpdater {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         if (api == null) {
-            logger.error(Exception.ERROR_REGISTER_PLAYER_EVENTS);
+            logger.warn(Exception.ERROR_REGISTER_PLAYER_EVENTS);
         }
         else {
             FMLCommonHandler.instance().bus().register(new PlayerEvents());

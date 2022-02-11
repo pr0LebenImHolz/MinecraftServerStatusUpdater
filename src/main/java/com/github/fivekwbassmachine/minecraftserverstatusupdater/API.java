@@ -6,7 +6,6 @@ import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.*;
 import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import org.apache.logging.log4j.Logger;
 
 /**
  * The API to communicate with the bot.
