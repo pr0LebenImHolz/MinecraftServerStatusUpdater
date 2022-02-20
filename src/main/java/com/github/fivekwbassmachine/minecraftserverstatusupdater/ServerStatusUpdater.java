@@ -4,10 +4,16 @@ import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.Exception;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.FileUtils;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.ServerStatus;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.server.FMLServerHandler;
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -18,7 +24,7 @@ import java.io.IOException;
  * @author 5kWBassMachine
  * @version 1.0.0
  */
-@Mod(modid = ServerStatusUpdater.MOD_ID, name = ServerStatusUpdater.NAME, version = ServerStatusUpdater.VERSION)
+@Mod(modid = ServerStatusUpdater.MOD_ID, name = ServerStatusUpdater.NAME, version = ServerStatusUpdater.VERSION, acceptableRemoteVersions = "*")
 public class ServerStatusUpdater {
 
     public static final String MOD_ID = "serverstatusupdater";
@@ -54,7 +60,7 @@ public class ServerStatusUpdater {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
-        logger = event.getModLog();
+        logger = LogManager.getLogger();
         // Read config
         debugging = true;
         File file = new File("./config/ServerStatusUpdater.txt");
