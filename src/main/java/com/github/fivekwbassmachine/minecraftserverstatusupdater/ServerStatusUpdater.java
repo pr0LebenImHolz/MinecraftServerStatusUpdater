@@ -3,7 +3,6 @@ package com.github.fivekwbassmachine.minecraftserverstatusupdater;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.Exception;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.FileUtils;
 import com.github.fivekwbassmachine.minecraftserverstatusupdater.util.ServerStatus;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
