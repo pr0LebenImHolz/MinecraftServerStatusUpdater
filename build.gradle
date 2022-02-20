@@ -114,3 +114,11 @@ publishing {
         }
     }
 }
+
+javadoc.doFirst {
+    delete 'docs/javadoc'
+}
+javadoc.doLast {
+    ant.move file: 'build/docs/javadoc',
+            todir: 'docs/'
+}
