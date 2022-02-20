@@ -13,14 +13,34 @@ Because modding for 1.7.10 is almost impossible, the Mod is held very small with
 - [Current] 1.12.2
 - [**Development Discontinued!**] 1.7.10
 
-## States
+## API
+
+The Mod accesses following endpoints:
+
+### Version
+
+[GET] `https://example.com:443/foo/bar?token=<TOKEN>&target=version`
+
+The Mod expects an HTTP 200 response, the response body must be the API version of the mod without linebreaks:
+
+`1.0.0`
+
+### Update
+
+[POST] `https://example.com:443/foo/bar?token=<TOKEN>&target=update&status=<STARTING>`
+
+The Mod expects an HTTP 204 response.
+
+#### States
 
 - STARTING
 - RUNNING
 - STOPPING
 - OFFLINE
 
-## Triggers
+#### Triggers
+
+An Update is triggered when...
 
 - When a player logs in
 - When a player logs out
@@ -56,21 +76,7 @@ Because modding for 1.7.10 is almost impossible, the Mod is held very small with
 | `1x21` | Can't Update Status: API Not Initialized. Check Logs, Configs And Restart The Server                            | Thrown when an API request is performed but the API is not initialized                                                         | Check for previously thrown errors (specially `1x10` - `1x14`) to find out the reason why the API is not initialized                                                                                        |
 | `1x30` | Didn't Register PlayerEvents To Save Resources: API Not Initialized. Check Logs, Configs And Restart The Server | Thrown when the API is not initialized                                                                                         | Check for previously thrown errors (specially `1x10` - `1x14`) to find out the reason why the API is not initialized                                                                                        |
 
-## API
+## JavaDoc
 
-The Mod accesses following endpoints:
-
-### Version
-
-[GET] `https://example.com:443/foo/bar?token=B&target=version`
-
-The Mod expects an HTTP 200 response, the response body must be the API version of the mod without linebreaks:
-
-`1.0.0`
-
-### Update
-
-[POST] `https://example.com:443/foo/bar?token=B&target=update&status=STARTING`
-
-The Mod expects an HTTP 204 response.
-  
+Location: `/docs/javadoc/`<br>
+Site: https://pr0lebenimholz.github.io/MinecraftServerStatusUpdater/javadoc/
